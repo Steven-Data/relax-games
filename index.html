@@ -61,6 +61,13 @@
       .lvl-btn{ appearance:none; border:1px solid var(--line); background:var(--card); color:var(--ink); width:40px; height:40px; border-radius:50%; font-size:17px; font-weight:900; cursor:pointer; font-family:inherit; box-shadow:var(--shadow); }
       .lvl-btn:disabled{ opacity:.35; }
       .lvl-name{ font-weight:900; font-size:16px; letter-spacing:.05em; min-width:86px; text-align:center; }
+      .lvl-select-btn{ appearance:none; border:1px solid var(--line); background:var(--card); color:var(--ink); height:40px; border-radius:999px; padding:0 14px; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:var(--shadow); }
+      .lvl-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin:10px auto 4px; max-width:400px; padding:12px; background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); }
+      .lvl-grid.hidden{ display:none; }
+      .lvl-grid button{ appearance:none; border:1px solid var(--line); background:var(--bg); color:var(--ink); height:42px; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; }
+      .lvl-grid button.cur{ background:var(--accent2); color:#fff; border-color:var(--accent2); }
+      .lvl-grid button.locked{ opacity:.32; cursor:default; }
+      .prog-note{ font-size:11px; color:var(--accent2); font-weight:700; }
       /* ---------- water sort (unchanged) ---------- */
       .tubes{ display:flex; flex-wrap:wrap; gap:14px 10px; justify-content:center; padding:14px 0 6px; }
       .tube{ width:52px; height:172px; border:none; background:transparent; cursor:pointer; padding:0; position:relative; transition:transform .15s ease; font-family:inherit; }
@@ -134,7 +141,7 @@
       <div class="wrap">
         <header class="menu-head">
           <h1>解壓遊戲廳</h1>
-          <p>六款動動腦的小遊戲，全部有關卡、從簡單開始。<br />慢慢想、慢慢玩，過關的感覺最解壓。</p>
+          <p>六款動動腦的小遊戲，每款都有 50 關、從簡單開始。<br />慢慢想、慢慢玩，過關的感覺最解壓。</p>
         </header>
         <div class="menu-grid">
           <button class="game-card" data-open="water">
@@ -146,7 +153,7 @@
                 <path d="M148 58 h16 v18 a8 8 0 0 1-16 0Z" fill="#6db9f2"/><path d="M148 40 h16 v18 h-16Z" fill="#ff8fab"/>
               </svg>
             </div>
-            <div class="card-body"><h2>水排序</h2><p>把彩色的水倒來倒去，一瓶一色慢慢分好。</p><span class="card-tag">關卡解謎</span></div>
+            <div class="card-body"><h2>水排序</h2><p>把彩色的水倒來倒去，一瓶一色慢慢分好。</p><span class="card-tag">50 關</span> <span class="prog-note" id="prog-water"></span></div>
           </button>
           <button class="game-card" data-open="unblock">
             <div class="card-art" style="background:linear-gradient(150deg,#f7e3c3,#eecfa0)">
@@ -159,7 +166,7 @@
                 <path d="M150 46 l14 8 -14 8Z" fill="#2f8f7a"/>
               </svg>
             </div>
-            <div class="card-body"><h2>滑塊解謎</h2><p>滑開擋路的木塊，讓紅色方塊從出口溜出去。</p><span class="card-tag">關卡解謎</span></div>
+            <div class="card-body"><h2>滑塊解謎</h2><p>滑開擋路的木塊，讓紅色方塊從出口溜出去。</p><span class="card-tag">50 關</span> <span class="prog-note" id="prog-unblock"></span></div>
           </button>
           <button class="game-card" data-open="flow">
             <div class="card-art" style="background:linear-gradient(150deg,#e2ecdf,#c8dec4)">
@@ -170,7 +177,7 @@
                 <circle cx="40" cy="84" r="10" fill="#3d7bd9"/><circle cx="110" cy="84" r="10" fill="#3d7bd9"/>
               </svg>
             </div>
-            <div class="card-body"><h2>接管線</h2><p>把同色的圓點連起來，管線鋪滿每一格。</p><span class="card-tag">關卡解謎</span></div>
+            <div class="card-body"><h2>接管線</h2><p>把同色的圓點連起來，管線鋪滿每一格。</p><span class="card-tag">50 關</span> <span class="prog-note" id="prog-flow"></span></div>
           </button>
           <button class="game-card" data-open="stroke">
             <div class="card-art" style="background:linear-gradient(150deg,#f3e2ee,#e6cbe0)">
@@ -179,7 +186,7 @@
                 <circle cx="60" cy="78" r="8" fill="#fff" stroke="#22302a" stroke-width="3"/><circle cx="100" cy="22" r="8" fill="#fff" stroke="#22302a" stroke-width="3"/><circle cx="140" cy="78" r="8" fill="#fff" stroke="#22302a" stroke-width="3"/>
               </svg>
             </div>
-            <div class="card-body"><h2>一筆畫</h2><p>一筆走完所有線條，不抬手、不重複。</p><span class="card-tag">關卡解謎</span></div>
+            <div class="card-body"><h2>一筆畫</h2><p>一筆走完所有線條，不抬手、不重複。</p><span class="card-tag">50 關</span> <span class="prog-note" id="prog-stroke"></span></div>
           </button>
           <button class="game-card" data-open="sokoban">
             <div class="card-art" style="background:linear-gradient(150deg,#efe6d8,#ddcdb2)">
@@ -191,7 +198,7 @@
                 <circle cx="82" cy="52" r="8" fill="#22302a"/><circle cx="79" cy="49" r="2.6" fill="#fff"/>
               </svg>
             </div>
-            <div class="card-body"><h2>推箱子</h2><p>把箱子一個一個推到綠色目標上，只能推不能拉。</p><span class="card-tag">關卡解謎</span></div>
+            <div class="card-body"><h2>推箱子</h2><p>把箱子一個一個推到綠色目標上，只能推不能拉。</p><span class="card-tag">50 關</span> <span class="prog-note" id="prog-sokoban"></span></div>
           </button>
           <button class="game-card" data-open="sudoku">
             <div class="card-art" style="background:linear-gradient(150deg,#dde8f5,#c2d6ee)">
@@ -204,7 +211,7 @@
                 </g>
               </svg>
             </div>
-            <div class="card-body"><h2>數獨</h2><p>6×6 小數獨，每行、每列、每區都是 1 到 6。</p><span class="card-tag">關卡解謎</span></div>
+            <div class="card-body"><h2>數獨</h2><p>6×6 小數獨，每行、每列、每區都是 1 到 6。</p><span class="card-tag">50 關</span> <span class="prog-note" id="prog-sudoku"></span></div>
           </button>
         </div>
         <p class="menu-foot">所有聲音都是即時合成的，輕輕的，放心開著玩。</p>
@@ -219,6 +226,13 @@
         <span class="hud-chip" id="water-hud">第 1 關</span>
       </div>
       <div class="game-body">
+        <div class="lvl-row">
+          <button class="lvl-btn" id="water-prev" aria-label="上一關">‹</button>
+          <span class="lvl-name" id="water-lvl">第 1 / 50 關</span>
+          <button class="lvl-btn" id="water-next" aria-label="下一關">›</button>
+          <button class="lvl-select-btn" id="water-select">選關</button>
+        </div>
+        <div class="lvl-grid hidden" id="water-grid"></div>
         <div class="tubes" id="tubes"></div>
         <p class="hint">點一支試管拿起來，再點另一支倒過去。<br />只能倒在同色水面上，或空試管裡。</p>
         <div class="row">
@@ -238,9 +252,11 @@
       <div class="game-body">
         <div class="lvl-row">
           <button class="lvl-btn" id="ub-prev" aria-label="上一關">‹</button>
-          <span class="lvl-name" id="ub-lvl">第 1 關</span>
+          <span class="lvl-name" id="ub-lvl">第 1 / 50 關</span>
           <button class="lvl-btn" id="ub-next" aria-label="下一關">›</button>
+          <button class="lvl-select-btn" id="ub-select">選關</button>
         </div>
+        <div class="lvl-grid hidden" id="ub-grid"></div>
         <div class="ub-board" id="ub-board"></div>
         <p class="hint">拖動木塊：橫的只能左右滑、直的只能上下滑。<br />把紅色 ★ 木塊滑到右邊出口就過關。</p>
         <div class="row"><button class="btn ghost" id="ub-reset">↩ 重開本關</button></div>
@@ -257,9 +273,11 @@
       <div class="game-body">
         <div class="lvl-row">
           <button class="lvl-btn" id="flow-prev" aria-label="上一關">‹</button>
-          <span class="lvl-name" id="flow-lvl">第 1 關</span>
+          <span class="lvl-name" id="flow-lvl">第 1 / 50 關</span>
           <button class="lvl-btn" id="flow-next" aria-label="下一關">›</button>
+          <button class="lvl-select-btn" id="flow-select">選關</button>
         </div>
+        <div class="lvl-grid hidden" id="flow-grid"></div>
         <div class="flow-board" id="flow-board"></div>
         <p class="hint">從一個圓點拖到同色的另一個圓點，拉出一條管線。<br />管線不能交叉，而且要鋪滿每一格才算過關。</p>
         <div class="row"><button class="btn ghost" id="flow-reset">↩ 全部重來</button></div>
@@ -276,9 +294,11 @@
       <div class="game-body">
         <div class="lvl-row">
           <button class="lvl-btn" id="stroke-prev" aria-label="上一關">‹</button>
-          <span class="lvl-name" id="stroke-lvl">第 1 關</span>
+          <span class="lvl-name" id="stroke-lvl">第 1 / 50 關</span>
           <button class="lvl-btn" id="stroke-next" aria-label="下一關">›</button>
+          <button class="lvl-select-btn" id="stroke-select">選關</button>
         </div>
+        <div class="lvl-grid hidden" id="stroke-grid"></div>
         <div class="stroke-stage" id="stroke-stage"></div>
         <p class="hint">點一個圓點開始，再依序點相鄰的圓點（也可以按住拖過去）。<br />每條線只能走一次，走完所有線就過關。從奇數線的點出發會比較順喔。</p>
         <div class="row"><button class="btn ghost" id="stroke-reset">↩ 重新畫</button></div>
@@ -295,9 +315,11 @@
       <div class="game-body">
         <div class="lvl-row">
           <button class="lvl-btn" id="soko-prev" aria-label="上一關">‹</button>
-          <span class="lvl-name" id="soko-lvl">第 1 關</span>
+          <span class="lvl-name" id="soko-lvl">第 1 / 50 關</span>
           <button class="lvl-btn" id="soko-next" aria-label="下一關">›</button>
+          <button class="lvl-select-btn" id="soko-select">選關</button>
         </div>
+        <div class="lvl-grid hidden" id="soko-grid"></div>
         <div class="soko-board" id="soko-board"></div>
         <div class="dpad">
           <span class="sp"></span><button data-dir="0,-1" aria-label="上">▲</button><span class="sp"></span>
@@ -322,9 +344,11 @@
       <div class="game-body">
         <div class="lvl-row">
           <button class="lvl-btn" id="sudo-prev" aria-label="上一關">‹</button>
-          <span class="lvl-name" id="sudo-lvl">第 1 關</span>
+          <span class="lvl-name" id="sudo-lvl">第 1 / 50 關</span>
           <button class="lvl-btn" id="sudo-next" aria-label="下一關">›</button>
+          <button class="lvl-select-btn" id="sudo-select">選關</button>
         </div>
+        <div class="lvl-grid hidden" id="sudo-grid"></div>
         <div class="sudo-board" id="sudo-board"></div>
         <div class="numpad" id="sudo-pad"></div>
         <p class="hint">點一格，再點下面的數字填進去。<br />每一行、每一列、每個 2×3 區塊，都要有 1 到 6 各一個。填錯會變紅色。</p>
@@ -433,6 +457,7 @@
       document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
       $("screen-menu").classList.add("active");
       window.scrollTo(0,0);
+      if(typeof refreshMenuProg === "function") refreshMenuProg();
     }
     document.querySelectorAll("[data-open]").forEach(function(b){
       b.addEventListener("click", function(){ audio(); openGame(b.getAttribute("data-open")); });
@@ -440,17 +465,96 @@
     document.querySelectorAll("[data-back]").forEach(function(b){
       b.addEventListener("click", goMenu);
     });
-    function levelNav(prefix, count, get, set){
-      /* prev/next buttons + label for a fixed level list */
+    /* ================= 50-level system: seeded RNG + progress ================= */
+    var TOTAL_LEVELS = 50;
+    function makeRng(seed){
+      var a = (Math.imul(seed|0, 2654435761) ^ 0x9E3779B9) >>> 0;
+      if(a === 0) a = 1;
+      return function(){
+        a |= 0; a = (a + 0x6D2B79F5) | 0;
+        var t = Math.imul(a ^ (a >>> 15), 1 | a);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+    function rngShuffle(rng, arr){
+      for(var i=arr.length-1;i>0;i--){ var j=Math.floor(rng()*(i+1)); var t=arr[i]; arr[i]=arr[j]; arr[j]=t; }
+      return arr;
+    }
+    function rngInt(rng, a, b){ return a + Math.floor(rng()*(b-a+1)); }
+    var PROG_KEY = "jieya-prog-v1";
+    var progStore = null;
+    function progLoad(){
+      if(progStore) return progStore;
+      try{ progStore = JSON.parse(localStorage.getItem(PROG_KEY) || "{}") || {}; }catch(e){ progStore = {}; }
+      return progStore;
+    }
+    function progFor(game){
+      var p = progLoad();
+      if(!p[game] || typeof p[game].u !== "number") p[game] = { u:1, l:1 };
+      return p[game];
+    }
+    function progSave(){ try{ localStorage.setItem(PROG_KEY, JSON.stringify(progLoad())); }catch(e){} }
+    function progSetLast(game, lvl1){
+      var pr = progFor(game); pr.l = lvl1;
+      if(lvl1 > pr.u) pr.u = lvl1;
+      progSave(); refreshMenuProg();
+    }
+    function progComplete(game, lvl1){
+      var pr = progFor(game);
+      if(lvl1 >= pr.l) pr.l = Math.min(TOTAL_LEVELS, lvl1 + 1);
+      if(lvl1 + 1 > pr.u) pr.u = Math.min(TOTAL_LEVELS, lvl1 + 1);
+      progSave(); refreshMenuProg();
+    }
+    function refreshMenuProg(){
+      ["water","unblock","flow","stroke","sokoban","sudoku"].forEach(function(g){
+        var el = $("prog-" + g);
+        if(!el) return;
+        var pr = progFor(g);
+        el.textContent = pr.u > 1 ? ("玩到第 " + pr.l + " 關 · 已解鎖 " + pr.u + " 關") : "";
+      });
+    }
+    /* Level UI: prev/next + select grid + unlock gating.
+       get() -> 0-based level, goto(i) loads level i. Returns sync(). */
+    function setupLevelUI(prefix, gameKey, get, goto){
+      var grid = $(prefix + "-grid");
       function sync(){
-        $(prefix+"-lvl").textContent = "第 " + (get()+1) + " 關";
-        $(prefix+"-prev").disabled = get() <= 0;
-        $(prefix+"-next").disabled = get() >= count-1;
+        var cur = get();
+        var unlocked = progFor(gameKey).u;
+        $(prefix + "-lvl").textContent = "第 " + (cur+1) + " / " + TOTAL_LEVELS + " 關";
+        $(prefix + "-prev").disabled = cur <= 0;
+        $(prefix + "-next").disabled = (cur >= TOTAL_LEVELS - 1) || (cur + 1 > unlocked - 1);
+        if(grid){
+          grid.innerHTML = "";
+          for(var i=0;i<TOTAL_LEVELS;i++){
+            (function(i){
+              var b = document.createElement("button");
+              b.textContent = i + 1;
+              var locked = i > unlocked - 1;
+              if(locked) b.className = "locked";
+              if(i === cur) b.className = "cur";
+              b.disabled = locked;
+              b.setAttribute("aria-label", "第 " + (i+1) + " 關" + (locked ? "（未解鎖）" : ""));
+              b.addEventListener("click", function(){
+                if(locked) return;
+                grid.classList.add("hidden");
+                goto(i); SFX.click(800);
+              });
+              grid.appendChild(b);
+            })(i);
+          }
+        }
       }
-      $(prefix+"-prev").addEventListener("click", function(){ if(get()>0){ set(get()-1); SFX.click(800); } sync(); });
-      $(prefix+"-next").addEventListener("click", function(){ if(get()<count-1){ set(get()+1); SFX.click(800); } sync(); });
+      $(prefix + "-prev").addEventListener("click", function(){ if(get() > 0){ goto(get()-1); SFX.click(800); } });
+      $(prefix + "-next").addEventListener("click", function(){
+        var cur = get(), unlocked = progFor(gameKey).u;
+        if(cur < TOTAL_LEVELS - 1 && cur + 1 <= unlocked - 1){ goto(cur+1); SFX.click(800); }
+      });
+      var selBtn = $(prefix + "-select");
+      if(selBtn && grid) selBtn.addEventListener("click", function(){ grid.classList.toggle("hidden"); SFX.click(900); });
       return sync;
     }
+    refreshMenuProg();
     </script>
     <script>
     /* ================= WATER SORT (kept exactly as before) ================= */
@@ -461,17 +565,29 @@
         { name:"綠", css:"#3fae6a" }, { name:"青", css:"#2fb3a6" }, { name:"藍", css:"#3d7bd9" },
         { name:"粉", css:"#ef7fae" }, { name:"棕", css:"#9a6a44" }
       ];
-      var level = 1, tubes = [], sel = null, history = [], initial = null, won = false;
+      var lvl = Math.min(TOTAL_LEVELS, Math.max(1, progFor("water").l)) - 1;
+      var tubes = [], sel = null, history = [], initial = null, won = false;
       var box = $("tubes");
-      function genLevel(nColors){
+      var syncNav = null;
+      function colorsFor(l){
+        if(l < 8) return 4;
+        if(l < 16) return 5;
+        if(l < 28) return 6;
+        if(l < 40) return 7;
+        return 8;
+      }
+      /* Solvable by construction: start from the solved state and scramble with
+         legal-ish reverse pours (seeded by level number -> same puzzle every visit). */
+      function genLevel(nColors, seed){
+        var rng = makeRng(seed);
         for(var attempt=0; attempt<60; attempt++){
-          var t = scramble(nColors);
+          var t = scramble(rng, nColors);
           var mixed = t.filter(function(x){ return x.length > 1 && !x.every(function(y){ return y === x[0]; }); }).length;
           if(mixed >= Math.ceil(nColors/2)) return t;
         }
-        return scramble(nColors);
+        return scramble(makeRng(seed + 999), nColors);
       }
-      function scramble(nColors){
+      function scramble(rng, nColors){
         var t = [];
         for(var c=0;c<nColors;c++) t.push([c,c,c,c]);
         t.push([]); t.push([]);
@@ -495,8 +611,8 @@
             }
           }
           if(!options.length) break;
-          var o = options[randi(0, options.length-1)];
-          var k = randi(1, Math.min(o[2]-1, o[3]));
+          var o = options[Math.floor(rng() * options.length)];
+          var k = 1 + Math.floor(rng() * Math.min(o[2]-1, o[3]));
           for(var m=0;m<k;m++) t[o[1]].push(t[o[0]].pop());
           lastA = o[1]; lastB = o[0];
         }
@@ -521,13 +637,13 @@
         return n;
       }
       function newLevel(){
-        var nColors;
-        if(level === 1) nColors = 4; else if(level === 2) nColors = 5; else if(level === 3) nColors = 6; else nColors = Math.min(8, 6 + (level-3));
-        tubes = genLevel(nColors);
+        tubes = genLevel(colorsFor(lvl), 1000 + lvl * 131);
         initial = tubes.map(function(x){ return x.slice(); });
         history = []; sel = null; won = false;
-        $("water-hud").textContent = "第 " + level + " 關";
+        $("water-hud").textContent = "第 " + (lvl+1) + " 關";
+        progSetLast("water", lvl + 1);
         render();
+        if(syncNav) syncNav();
       }
       function render(){
         box.innerHTML = "";
@@ -568,7 +684,9 @@
           sel = null; render();
           if(checkWin()){
             won = true; SFX.win(); confetti();
-            showOverlay("🧪", "第 " + level + " 關完成！", "每一瓶都分得乾乾淨淨，看著好舒服。", "下一關", function(){ level++; newLevel(); });
+            progComplete("water", lvl + 1);
+            var last = lvl >= TOTAL_LEVELS - 1;
+            showOverlay("🧪", "第 " + (lvl+1) + " 關完成！", last ? "50 關全部完成，太厲害了！" : "每一瓶都分得乾乾淨淨，看著好舒服。", last ? "再玩一次" : "下一關", function(){ if(!last){ lvl++; } newLevel(); });
           }
         } else {
           SFX.bad();
@@ -583,6 +701,9 @@
         tubes = initial.map(function(t){ return t.slice(); });
         history = []; sel = null; won = false; SFX.click(700); render();
       });
+      syncNav = setupLevelUI("water", "water",
+        function(){ return lvl; },
+        function(v){ lvl = v; newLevel(); });
       newLevel();
       Games.water = { start: function(){}, stop: function(){} };
     })();
@@ -591,21 +712,99 @@
     /* ================= UNBLOCK 滑塊解謎 ================= */
     (function(){
       var N = 6, EXIT_ROW = 2;
-      /* block: [x, y, w, h] — first block is always the red target (horizontal, row 2) */
-      var LEVELS = [
-        { blocks: [[0,2,2,1],[3,1,1,2],[1,4,3,1],[5,3,1,2]] },
-        { blocks: [[0,2,2,1],[2,2,1,2],[4,1,1,3],[2,0,2,1],[4,4,2,1]] },
-        { blocks: [[1,2,2,1],[3,0,1,3],[5,2,1,2],[2,4,3,1],[0,0,1,2],[0,5,3,1]] },
-        { blocks: [[0,2,2,1],[2,1,1,3],[4,2,1,2],[2,0,3,1],[4,4,2,1],[5,0,1,2],[0,4,2,1]] },
-        { blocks: [[0,2,2,1],[3,1,1,3],[5,1,1,2],[1,0,3,1],[2,4,2,1],[5,4,1,2],[0,5,2,1],[1,3,2,1]] }
+      /* Hand-verified fallback levels (also used for the very first levels). */
+      var FALLBACK = [
+        [[0,2,2,1],[3,1,1,2],[1,4,3,1],[5,3,1,2]],
+        [[0,2,2,1],[2,2,1,2],[4,1,1,3],[2,0,2,1],[4,4,2,1]],
+        [[1,2,2,1],[3,0,1,3],[5,2,1,2],[2,4,3,1],[0,0,1,2],[0,5,3,1]],
+        [[0,2,2,1],[2,1,1,3],[4,2,1,2],[2,0,3,1],[4,4,2,1],[5,0,1,2],[0,4,2,1]],
+        [[0,2,2,1],[3,1,1,3],[5,1,1,2],[1,0,3,1],[2,4,2,1],[5,4,1,2],[0,5,2,1],[1,3,2,1]]
       ];
-      var lvl = 0, blocks = [], moves = 0, won = false, cell = 50;
+      /* ---- BFS solver: a slide of any distance counts as one move ---- */
+      function ubSolve(defs, nodeCap){
+        function occGrid(st, skip){
+          var g = [];
+          for(var i=0;i<N*N;i++) g.push(-1);
+          for(var bi=0;bi<defs.length;bi++){
+            if(bi === skip) continue;
+            var b = defs[bi], x = st[bi*2], y = st[bi*2+1];
+            for(var dx=0;dx<b[2];dx++) for(var dy=0;dy<b[3];dy++) g[(y+dy)*N + (x+dx)] = bi;
+          }
+          return g;
+        }
+        function fits(st, bi, nx, ny){
+          var b = defs[bi];
+          if(nx < 0 || ny < 0 || nx + b[2] > N || ny + b[3] > N) return false;
+          var g = occGrid(st, bi);
+          for(var dx=0;dx<b[2];dx++) for(var dy=0;dy<b[3];dy++) if(g[(ny+dy)*N + (nx+dx)] >= 0) return false;
+          return true;
+        }
+        var start = [];
+        defs.forEach(function(b){ start.push(b[0], b[1]); });
+        if(start[0] + defs[0][2] >= N) return 0;
+        var seen = {}; seen[start.join(",")] = true;
+        var queue = [{ st: start, d: 0 }], head = 0, nodes = 0;
+        while(head < queue.length){
+          var cur = queue[head++]; nodes++;
+          if(nodes > nodeCap) return -1;
+          for(var bi=0;bi<defs.length;bi++){
+            var horiz = defs[bi][2] > defs[bi][3];
+            var dirs = horiz ? [[1,0],[-1,0]] : [[0,1],[0,-1]];
+            for(var di=0;di<2;di++){
+              var nx = cur.st[bi*2], ny = cur.st[bi*2+1];
+              while(true){
+                nx += dirs[di][0]; ny += dirs[di][1];
+                if(!fits(cur.st, bi, nx, ny)) break;
+                var nst = cur.st.slice(); nst[bi*2] = nx; nst[bi*2+1] = ny;
+                if(bi === 0 && nx + defs[0][2] >= N) return cur.d + 1;
+                var k = nst.join(",");
+                if(!seen[k]){ seen[k] = true; queue.push({ st: nst, d: cur.d + 1 }); }
+              }
+            }
+          }
+        }
+        return -1;
+      }
+      /* Seeded generator: random placements, kept only when the BFS solver
+         confirms a solution within a gentle move range. */
+      function genUnblock(l){
+        if(l < FALLBACK.length) return FALLBACK[l];
+        var rng = makeRng(5000 + l * 977);
+        var nBlocks = Math.min(9, 5 + Math.floor(l / 9));
+        var minMoves = 3 + Math.floor(l / 6), maxMoves = 10 + Math.floor(l / 3);
+        for(var attempt=0; attempt<160; attempt++){
+          var defs = [[rngInt(rng, 0, 1), 2, 2, 1]];
+          var placed = 1, guard = 0;
+          while(placed < nBlocks && guard++ < 300){
+            var horiz = rng() < 0.5;
+            var len = rngInt(rng, 2, 3);
+            var w = horiz ? len : 1, h = horiz ? 1 : len;
+            var x = rngInt(rng, 0, N - w), y = rngInt(rng, 0, N - h);
+            if(y === 2 && horiz && x + w > defs[0][0]) continue; /* keep exit row mostly clear of horizontals */
+            var overlap = false;
+            for(var i=0;i<defs.length;i++){
+              var b = defs[i];
+              if(x < b[0] + b[2] && x + w > b[0] && y < b[1] + b[3] && y + h > b[1]){ overlap = true; break; }
+            }
+            if(overlap) continue;
+            defs.push([x, y, w, h]); placed++;
+          }
+          if(defs.length < 4) continue;
+          var sol = ubSolve(defs, 50000);
+          if(sol >= minMoves && sol <= maxMoves) return defs;
+          if(attempt > 110 && sol >= 2 && sol <= maxMoves + 8) return defs;
+        }
+        return FALLBACK[l % FALLBACK.length];
+      }
+      var lvl = Math.min(TOTAL_LEVELS, Math.max(1, progFor("unblock").l)) - 1;
+      var blocks = [], moves = 0, won = false, cell = 50;
       var board = $("ub-board");
-      var syncNav = levelNav("ub", LEVELS.length,
+      var syncNav = setupLevelUI("ub", "unblock",
         function(){ return lvl; },
         function(v){ lvl = v; load(); });
       function load(){
-        var def = LEVELS[lvl].blocks;
+        var def = genUnblock(lvl);
+        progSetLast("unblock", lvl + 1);
         blocks = def.map(function(b, i){
           return { x:b[0], y:b[1], w:b[2], h:b[3], horiz: b[2] > b[3], target: i === 0, ci: (i-1) % 5, el: null };
         });
@@ -718,8 +917,9 @@
         var t = blocks[0];
         if(t.x + t.w >= N){
           won = true; SFX.win(); confetti();
-          var last = lvl >= LEVELS.length - 1;
-          showOverlay("🚪", "第 " + (lvl+1) + " 關完成！", "紅色木塊溜出去了，只用了 " + moves + " 步。", last ? "再玩一次" : "下一關",
+          progComplete("unblock", lvl + 1);
+          var last = lvl >= TOTAL_LEVELS - 1;
+          showOverlay("🚪", "第 " + (lvl+1) + " 關完成！", last ? "50 關全部完成，太厲害了！" : "紅色木塊溜出去了，只用了 " + moves + " 步。", last ? "再玩一次" : "下一關",
             function(){ if(!last){ lvl++; } load(); });
         }
       }
@@ -732,24 +932,91 @@
     /* ================= FLOW 接管線 ================= */
     (function(){
       var FCOLORS = ["#e2503c","#3d7bd9","#3fae6a","#f2b01e","#8f57ab","#2fb3a6","#ef7fae"];
-      /* each level: size + endpoint pairs [colorIdx, r1,c1, r2,c2]; every level has a
-         hand-verified full-coverage solution (paths partition the whole grid). */
-      var LEVELS = [
-        { n:4, pairs: [[0, 0,0, 1,1],[1, 0,3, 2,1],[2, 1,0, 3,3]] },
-        { n:5, pairs: [[0, 0,0, 1,0],[1, 0,3, 2,4],[2, 2,0, 3,0],[3, 4,0, 3,3]] },
-        { n:5, pairs: [[0, 0,0, 1,4],[1, 1,0, 2,3],[2, 2,0, 3,3],[3, 3,0, 4,0],[4, 2,4, 4,2]] },
-        { n:6, pairs: [[0, 0,0, 1,5],[1, 1,0, 2,4],[2, 2,0, 3,3],[3, 3,0, 4,0],[4, 2,5, 4,5],[5, 5,0, 4,3],[6, 5,4, 5,5]] },
-        { n:6, pairs: [[0, 0,5, 1,0],[1, 1,5, 2,1],[2, 2,5, 3,2],[3, 3,5, 4,5],[4, 2,0, 4,0],[5, 5,5, 4,2],[6, 5,1, 5,0]] }
-      ];
-      var lvl = 0, n = 5, endpoints = {}, paths = {}, cellEls = [];
+      /* Solution-first generation (seeded per level): build one Hamiltonian path
+         covering the whole grid, then cut it into color segments — the segment
+         ends become the dots, so a full-coverage solution always exists. */
+      function flowParams(l){
+        if(l < 10) return { n:4, colors:3 };
+        if(l < 25) return { n:5, colors:4 };
+        if(l < 40) return { n:6, colors:5 };
+        return { n:7, colors:6 };
+      }
+      function hamiltonianPath(rng, n){
+        var total = n * n;
+        function neighbors(idx){
+          var r = Math.floor(idx / n), c = idx % n, out = [];
+          if(r > 0) out.push(idx - n);
+          if(r < n-1) out.push(idx + n);
+          if(c > 0) out.push(idx - 1);
+          if(c < n-1) out.push(idx + 1);
+          return out;
+        }
+        for(var attempt=0; attempt<40; attempt++){
+          var visited = new Array(total).fill(false);
+          var path = [];
+          var start = Math.floor(rng() * total);
+          visited[start] = true; path.push(start);
+          var ok = true;
+          while(path.length < total){
+            var cur = path[path.length - 1];
+            var cand = neighbors(cur).filter(function(x){ return !visited[x]; });
+            if(!cand.length){ ok = false; break; }
+            /* Warnsdorff-style: prefer the candidate with fewest onward moves */
+            cand.sort(function(a, b){
+              var da = neighbors(a).filter(function(x){ return !visited[x]; }).length;
+              var db = neighbors(b).filter(function(x){ return !visited[x]; }).length;
+              return da - db;
+            });
+            var best = neighbors(cand[0]).filter(function(x){ return !visited[x]; }).length;
+            var ties = cand.filter(function(x){ return neighbors(x).filter(function(y){ return !visited[y]; }).length === best; });
+            var nxt = ties[Math.floor(rng() * ties.length)];
+            visited[nxt] = true; path.push(nxt);
+          }
+          if(ok) return path;
+        }
+        /* fallback: boustrophedon snake (always a valid Hamiltonian path) */
+        var snake = [];
+        for(var r=0;r<n;r++){
+          if(r % 2 === 0) for(var c=0;c<n;c++) snake.push(r*n + c);
+          else for(var c2=n-1;c2>=0;c2--) snake.push(r*n + c2);
+        }
+        return snake;
+      }
+      function genFlow(l){
+        var P = flowParams(l);
+        var rng = makeRng(9000 + l * 613);
+        var path = hamiltonianPath(rng, P.n);
+        var total = P.n * P.n;
+        /* cut points: every segment at least 3 cells */
+        var cuts = [0];
+        var guard = 0;
+        while(cuts.length < P.colors && guard++ < 200){
+          var cp = rngInt(rng, 3, total - 3);
+          var okCut = true;
+          for(var i=0;i<cuts.length;i++) if(Math.abs(cp - cuts[i]) < 3) okCut = false;
+          if(okCut) cuts.push(cp);
+        }
+        cuts.sort(function(a,b){ return a - b; });
+        cuts.push(total);
+        while(cuts.length - 1 > P.colors) cuts.splice(1, 1);
+        var pairs = [];
+        for(var s=0; s<cuts.length-1; s++){
+          var a = path[cuts[s]], b = path[cuts[s+1] - 1];
+          pairs.push([s, Math.floor(a / P.n), a % P.n, Math.floor(b / P.n), b % P.n]);
+        }
+        return { n: P.n, pairs: pairs };
+      }
+      var lvl = Math.min(TOTAL_LEVELS, Math.max(1, progFor("flow").l)) - 1;
+      var n = 5, endpoints = {}, paths = {}, cellEls = [];
       var drawing = -1, won = false;
       var board = $("flow-board");
-      var syncNav = levelNav("flow", LEVELS.length,
+      var syncNav = setupLevelUI("flow", "flow",
         function(){ return lvl; },
         function(v){ lvl = v; load(); });
       function key(r,c){ return r + "," + c; }
       function load(){
-        var L = LEVELS[lvl];
+        var L = genFlow(lvl);
+        progSetLast("flow", lvl + 1);
         n = L.n; endpoints = {}; paths = {}; drawing = -1; won = false;
         L.pairs.forEach(function(p){
           endpoints[key(p[1],p[2])] = p[0];
@@ -847,8 +1114,9 @@
           if(!a || !b) return;
         }
         won = true; SFX.win(); confetti();
-        var last = lvl >= LEVELS.length - 1;
-        showOverlay("🌈", "第 " + (lvl+1) + " 關完成！", "所有管線都接好了，而且鋪滿了每一格！", last ? "再玩一次" : "下一關",
+        progComplete("flow", lvl + 1);
+        var last = lvl >= TOTAL_LEVELS - 1;
+        showOverlay("🌈", "第 " + (lvl+1) + " 關完成！", last ? "50 關全部完成，太厲害了！" : "所有管線都接好了，而且鋪滿了每一格！", last ? "再玩一次" : "下一關",
           function(){ if(!last){ lvl++; } load(); });
       }
       function cellFromEvent(e){
@@ -889,30 +1157,80 @@
     <script>
     /* ================= ONE STROKE 一筆畫 ================= */
     (function(){
-      /* nodes: [x,y] in a 100x100 view; edges: [i,j]. Every figure has an
-         Eulerian trail (0 or 2 odd-degree nodes) — verified by construction. */
-      var LEVELS = [
+      /* Seeded generation: the figure IS a random trail on a jittered lattice —
+         a trail using every edge exactly once exists by definition, so the
+         odd-degree vertex count is always 0 or 2 (Eulerian guaranteed). */
+      var FIRST_FIGS = [
         { nodes: [[50,14],[14,82],[86,82]], edges: [[0,1],[1,2],[2,0]] },
-        { nodes: [[22,22],[78,22],[78,78],[22,78]], edges: [[0,1],[1,2],[2,3],[3,0],[0,2]] },
-        { nodes: [[22,52],[78,52],[78,86],[22,86],[50,18]], edges: [[0,1],[1,2],[2,3],[3,0],[0,4],[4,1]] },
-        { nodes: [[50,50],[16,18],[16,82],[84,18],[84,82]], edges: [[0,1],[1,2],[2,0],[0,3],[3,4],[4,0]] },
-        { nodes: [[18,20],[50,20],[82,20],[18,80],[50,80],[82,80]], edges: [[0,1],[1,2],[2,5],[5,4],[4,3],[3,0],[1,4]] },
-        { nodes: [[50,10],[88,38],[74,84],[26,84],[12,38]], edges: [[0,1],[1,2],[2,3],[3,4],[4,0],[0,2]] }
+        { nodes: [[22,22],[78,22],[78,78],[22,78]], edges: [[0,1],[1,2],[2,3],[3,0],[0,2]] }
       ];
-      /* L6 check: pentagon cycle degrees 2 each + chord 0-2 makes nodes 0,2 degree 3 → Eulerian ✓ */
-      var lvl = 0, used = {}, cur = -1, doneCount = 0, won = false;
+      function genStroke(l){
+        if(l < FIRST_FIGS.length) return FIRST_FIGS[l];
+        var rng = makeRng(21000 + l * 389);
+        var cols = l < 18 ? 3 : 4;
+        var rows = l < 18 ? 3 : (l < 36 ? 3 : 4);
+        var targetEdges = Math.min(16, 4 + Math.floor(l / 3));
+        for(var attempt=0; attempt<60; attempt++){
+          /* jittered lattice points */
+          var pts = [], idxOf = {};
+          for(var r=0;r<rows;r++) for(var c=0;c<cols;c++){
+            var x = 14 + (cols === 1 ? 36 : c * (72 / (cols - 1))) + (rng() * 8 - 4);
+            var y = 14 + (rows === 1 ? 36 : r * (72 / (rows - 1))) + (rng() * 8 - 4);
+            idxOf[r + "," + c] = pts.length;
+            pts.push([Math.round(x), Math.round(y)]);
+          }
+          function nbrs(idx){
+            var rr = Math.floor(idx / cols), cc = idx % cols, out = [];
+            var dirs = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
+            for(var d=0;d<dirs.length;d++){
+              var nr = rr + dirs[d][0], nc = cc + dirs[d][1];
+              if(nr >= 0 && nr < rows && nc >= 0 && nc < cols) out.push(idxOf[nr + "," + nc]);
+            }
+            return out;
+          }
+          var usedE = {}, edges = [], usedNodes = {};
+          var curN = Math.floor(rng() * pts.length);
+          usedNodes[curN] = true;
+          var steps = 0;
+          while(edges.length < targetEdges && steps++ < 300){
+            var cand = nbrs(curN).filter(function(nb){
+              var k = curN < nb ? curN + "-" + nb : nb + "-" + curN;
+              return !usedE[k];
+            });
+            if(!cand.length) break;
+            var nxt = cand[Math.floor(rng() * cand.length)];
+            var k2 = curN < nxt ? curN + "-" + nxt : nxt + "-" + curN;
+            usedE[k2] = true; edges.push([curN, nxt]);
+            usedNodes[nxt] = true; curN = nxt;
+          }
+          if(edges.length < Math.max(4, targetEdges - 3)) continue;
+          /* remap to only the used nodes */
+          var remap = {}, nodes = [];
+          Object.keys(usedNodes).forEach(function(k){
+            remap[k] = nodes.length; nodes.push(pts[parseInt(k, 10)]);
+          });
+          var e2 = edges.map(function(e){ return [remap[e[0]], remap[e[1]]]; });
+          return { nodes: nodes, edges: e2 };
+        }
+        return FIRST_FIGS[1];
+      }
+      var FIG = FIRST_FIGS[0];
+      var lvl = Math.min(TOTAL_LEVELS, Math.max(1, progFor("stroke").l)) - 1;
+      var used = {}, cur = -1, doneCount = 0, won = false;
       var stage = $("stroke-stage");
-      var syncNav = levelNav("stroke", LEVELS.length,
+      var syncNav = setupLevelUI("stroke", "stroke",
         function(){ return lvl; },
         function(v){ lvl = v; load(); });
       function ekey(a,b){ return a < b ? a + "-" + b : b + "-" + a; }
       function load(){
+        FIG = genStroke(lvl);
         used = {}; cur = -1; doneCount = 0; won = false;
+        progSetLast("stroke", lvl + 1);
         render(); syncNav();
-        $("stroke-hud").textContent = "0 / " + LEVELS[lvl].edges.length + " 條線";
+        $("stroke-hud").textContent = "0 / " + FIG.edges.length + " 條線";
       }
       function adjacent(a, b){
-        var L = LEVELS[lvl];
+        var L = FIG;
         for(var i=0;i<L.edges.length;i++){
           var e = L.edges[i];
           if((e[0] === a && e[1] === b) || (e[0] === b && e[1] === a)) return ekey(a,b);
@@ -920,7 +1238,7 @@
         return null;
       }
       function render(){
-        var L = LEVELS[lvl];
+        var L = FIG;
         var s = '<svg viewBox="0 0 100 100">';
         L.edges.forEach(function(e){
           var a = L.nodes[e[0]], b = L.nodes[e[1]];
@@ -952,12 +1270,13 @@
         if(k && !used[k]){
           used[k] = true; doneCount++; cur = i;
           SFX.swap();
-          $("stroke-hud").textContent = doneCount + " / " + LEVELS[lvl].edges.length + " 條線";
+          $("stroke-hud").textContent = doneCount + " / " + FIG.edges.length + " 條線";
           render();
-          if(doneCount === LEVELS[lvl].edges.length){
+          if(doneCount === FIG.edges.length){
             won = true; SFX.win(); confetti();
-            var last = lvl >= LEVELS.length - 1;
-            showOverlay("✏️", "第 " + (lvl+1) + " 關完成！", "一筆到底，漂亮！所有線條都走完了。", last ? "再玩一次" : "下一關",
+            progComplete("stroke", lvl + 1);
+            var last = lvl >= TOTAL_LEVELS - 1;
+            showOverlay("✏️", "第 " + (lvl+1) + " 關完成！", last ? "50 關全部完成，太厲害了！" : "一筆到底，漂亮！所有線條都走完了。", last ? "再玩一次" : "下一關",
               function(){ if(!last){ lvl++; } load(); });
           }
         } else if(k && used[k]){
@@ -974,49 +1293,86 @@
 
     /* ================= SOKOBAN 推箱子 ================= */
     (function(){
-      var LEVELS = [
-        ["#######",
-         "#     #",
-         "# @$. #",
-         "#     #",
-         "#######"],
-        ["#######",
-         "#     #",
-         "# @$. #",
-         "#  $. #",
-         "#     #",
-         "#######"],
-        ["########",
-         "#      #",
-         "# @    #",
-         "# $$   #",
-         "# ..   #",
-         "#      #",
-         "########"],
-        ["########",
-         "#      #",
-         "# .$@  #",
-         "#      #",
-         "# .$   #",
-         "#      #",
-         "########"],
-        ["#########",
-         "#       #",
-         "# @     #",
-         "# $$$   #",
-         "# ...   #",
-         "#       #",
-         "#########"]
-      ];
-      var lvl = 0, walls = {}, targets = {}, boxes = [], player = {x:0,y:0};
+      /* Seeded reverse-play generation: start from a solved room (boxes on
+         targets), then pull boxes with random player walks. Reversing the
+         pulls is a valid solution, so every level is provably solvable. */
+      function genSokoban(l){
+        var rng = makeRng(33000 + l * 271);
+        var nBoxes = l < 12 ? 1 : l < 28 ? 2 : l < 42 ? 3 : 4;
+        var W = l < 20 ? 7 : 8, H = l < 20 ? 6 : 7;
+        for(var attempt=0; attempt<80; attempt++){
+          /* room: border walls + a couple of inner wall blocks on later levels */
+          var wall = {};
+          function wk(x,y){ return x + "," + y; }
+          for(var x=0;x<W;x++){ wall[wk(x,0)] = true; wall[wk(x,H-1)] = true; }
+          for(var y=0;y<H;y++){ wall[wk(0,y)] = true; wall[wk(W-1,y)] = true; }
+          if(l >= 15){
+            var nWalls = l < 32 ? 1 : 2;
+            for(var wi=0; wi<nWalls; wi++){
+              var wx = rngInt(rng, 2, W-3), wy = rngInt(rng, 2, H-3);
+              wall[wk(wx,wy)] = true;
+            }
+          }
+          var free = [];
+          for(var fy=1;fy<H-1;fy++) for(var fx=1;fx<W-1;fx++) if(!wall[wk(fx,fy)]) free.push([fx,fy]);
+          rngShuffle(rng, free);
+          if(free.length < nBoxes * 2 + 1) continue;
+          var targets = free.slice(0, nBoxes);
+          var boxes = targets.map(function(t){ return { x:t[0], y:t[1] }; });
+          var player = { x: free[nBoxes][0], y: free[nBoxes][1] };
+          function boxIdx(x,y){ for(var i=0;i<boxes.length;i++) if(boxes[i].x === x && boxes[i].y === y) return i; return -1; }
+          function isFree(x,y){ return !wall[wk(x,y)] && boxIdx(x,y) < 0 && !(player.x === x && player.y === y); }
+          var pulls = 0;
+          var steps = 30 + l * 2;
+          var dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+          for(var s=0;s<steps;s++){
+            var d = dirs[Math.floor(rng() * 4)];
+            var bx = player.x + d[0], by = player.y + d[1];
+            var bi = boxIdx(bx, by);
+            var backX = player.x - d[0], backY = player.y - d[1];
+            if(bi >= 0 && isFree(backX, backY)){
+              /* pull: box steps into the player's cell, player steps back */
+              boxes[bi] = { x: player.x, y: player.y };
+              player = { x: backX, y: backY };
+              pulls++;
+            } else if(isFree(bx, by)){
+              player = { x: bx, y: by };
+            }
+          }
+          if(pulls < Math.max(2, nBoxes)) continue;
+          var solvedCount = boxes.filter(function(b){
+            return targets.some(function(t){ return t[0] === b.x && t[1] === b.y; });
+          }).length;
+          if(solvedCount === nBoxes) continue; /* must start unsolved */
+          /* render to map strings */
+          var grid = [];
+          for(var gy=0;gy<H;gy++){
+            var row = "";
+            for(var gx=0;gx<W;gx++){
+              var ch = wall[wk(gx,gy)] ? "#" : " ";
+              var onT = targets.some(function(t){ return t[0] === gx && t[1] === gy; });
+              if(boxIdx(gx,gy) >= 0) ch = onT ? "*" : "$";
+              else if(player.x === gx && player.y === gy) ch = onT ? "+" : "@";
+              else if(onT) ch = ".";
+              row += ch;
+            }
+            grid.push(row);
+          }
+          return grid;
+        }
+        return ["#######","#     #","# @$. #","#     #","#######"];
+      }
+      var lvl = Math.min(TOTAL_LEVELS, Math.max(1, progFor("sokoban").l)) - 1;
+      var walls = {}, targets = {}, boxes = [], player = {x:0,y:0};
       var moves = 0, history = [], won = false, rows = 0, cols = 0;
       var board = $("soko-board");
-      var syncNav = levelNav("soko", LEVELS.length,
+      var syncNav = setupLevelUI("soko", "sokoban",
         function(){ return lvl; },
         function(v){ lvl = v; load(); });
       function key(x,y){ return x + "," + y; }
       function load(){
-        var map = LEVELS[lvl];
+        var map = genSokoban(lvl);
+        progSetLast("sokoban", lvl + 1);
         rows = map.length; cols = map[0].length;
         walls = {}; targets = {}; boxes = []; history = []; moves = 0; won = false;
         for(var y=0;y<rows;y++) for(var x=0;x<cols;x++){
@@ -1072,8 +1428,9 @@
         render();
         if(boxes.every(function(bb){ return targets[key(bb.x, bb.y)]; })){
           won = true; SFX.win(); confetti();
-          var last = lvl >= LEVELS.length - 1;
-          showOverlay("📦", "第 " + (lvl+1) + " 關完成！", "箱子全部到位，用了 " + moves + " 步。", last ? "再玩一次" : "下一關",
+          progComplete("sokoban", lvl + 1);
+          var last = lvl >= TOTAL_LEVELS - 1;
+          showOverlay("📦", "第 " + (lvl+1) + " 關完成！", last ? "50 關全部完成，太厲害了！" : "箱子全部到位，用了 " + moves + " 步。", last ? "再玩一次" : "下一關",
             function(){ if(!last){ lvl++; } load(); });
         }
       }
@@ -1114,7 +1471,7 @@
     /* ================= SUDOKU 數獨 6x6 ================= */
     (function(){
       var N = 6;
-      var lvl = 0, solution = [], grid = [], given = [], sel = null, won = false, startGrid = [];
+      var lvl = Math.min(TOTAL_LEVELS, Math.max(1, progFor("sudoku").l)) - 1, solution = [], grid = [], given = [], sel = null, won = false, startGrid = [];
       var board = $("sudo-board"), pad = $("sudo-pad");
       function valid(boardArr, r, c, v){
         for(var i=0;i<N;i++){
@@ -1143,13 +1500,13 @@
         }
         return 1;
       }
-      function genSolved(){
+      function genSolved(rng){
         var b = [];
         for(var r=0;r<N;r++){ b.push([0,0,0,0,0,0]); }
         (function fill(pos){
           if(pos === N*N) return true;
           var r = Math.floor(pos/N), c = pos % N;
-          var nums = shuffle([1,2,3,4,5,6]);
+          var nums = rngShuffle(rng, [1,2,3,4,5,6]);
           for(var i=0;i<nums.length;i++){
             if(valid(b, r, c, nums[i])){
               b[r][c] = nums[i];
@@ -1161,14 +1518,17 @@
         })(0);
         return b;
       }
+      var syncNav = null;
       function load(){
-        solution = genSolved();
+        var rng = makeRng(47000 + lvl * 733);
+        solution = genSolved(rng);
         grid = solution.map(function(row){ return row.slice(); });
         given = [];
         for(var r=0;r<N;r++){ given.push([true,true,true,true,true,true]); }
-        /* easy: remove ~14-19 cells, keeping a unique solution */
-        var targetRemove = 14 + (lvl % 4);
-        var cells = shuffle(Array.from({length: N*N}, function(_, i){ return i; }));
+        /* easy and gentle: remove 12 cells early, up to 22 by level 50,
+           always keeping a unique solution (checked by the counter). */
+        var targetRemove = Math.min(22, 12 + Math.floor(lvl / 3));
+        var cells = rngShuffle(rng, Array.from({length: N*N}, function(_, i){ return i; }));
         var removed = 0;
         for(var i=0;i<cells.length && removed < targetRemove;i++){
           var rr = Math.floor(cells[i]/N), cc = cells[i] % N;
@@ -1180,10 +1540,9 @@
         }
         startGrid = grid.map(function(row){ return row.slice(); });
         sel = null; won = false;
-        $("sudo-lvl").textContent = "第 " + (lvl+1) + " 關";
-        $("sudo-prev").disabled = lvl <= 0;
-        $("sudo-next").disabled = false;
+        progSetLast("sudoku", lvl + 1);
         render();
+        if(syncNav) syncNav();
       }
       function render(){
         board.innerHTML = "";
@@ -1221,8 +1580,10 @@
         }
         if(full && correct){
           won = true; SFX.win(); confetti();
-          showOverlay("🔢", "第 " + (lvl+1) + " 關完成！", "整盤數獨都填對了，腦袋有運動到！", "下一關",
-            function(){ lvl++; load(); });
+          progComplete("sudoku", lvl + 1);
+          var last = lvl >= TOTAL_LEVELS - 1;
+          showOverlay("🔢", "第 " + (lvl+1) + " 關完成！", last ? "50 關全部完成，太厲害了！" : "整盤數獨都填對了，腦袋有運動到！", last ? "再玩一次" : "下一關",
+            function(){ if(!last){ lvl++; } load(); });
         }
       }
       for(var v=1; v<=N; v++){
@@ -1237,8 +1598,9 @@
       erase.textContent = "⌫";
       erase.addEventListener("click", function(){ input(0); });
       pad.appendChild(erase);
-      $("sudo-prev").addEventListener("click", function(){ if(lvl > 0){ lvl--; load(); SFX.click(800); } });
-      $("sudo-next").addEventListener("click", function(){ lvl++; load(); SFX.click(800); });
+      syncNav = setupLevelUI("sudo", "sudoku",
+        function(){ return lvl; },
+        function(v){ lvl = v; load(); });
       $("sudo-reset").addEventListener("click", function(){
         grid = startGrid.map(function(row){ return row.slice(); });
         sel = null; won = false; SFX.click(700); render();
